@@ -17,7 +17,7 @@ export
 endif
 ifeq ($(CONFIG_ARCH_SM8150), y)
 include $(srctree)/techpack/audio/config/sm8150auto.conf
-export
+export  $(shell sed 's/=.*//' $(srctree)/techpack/audio/config/sm8150auto.conf)
 endif
 ifeq ($(CONFIG_ARCH_SDMSHRIKE), y)
 include $(srctree)/techpack/audio/config/sm8150auto.conf
@@ -76,5 +76,3 @@ endif
 #for mius end
 obj-y += ipc/
 obj-y += asoc/
-
-ccflags-y += $(DISABLE_CFI)

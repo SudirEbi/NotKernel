@@ -373,7 +373,8 @@ rmnet_perf_dereg_callbacks(struct net_device *dev,
 
 static bool rmnet_perf_config_hook_registered(void)
 {
-	int (*deag_entry)(struct sk_buff *skb);
+	void (*deag_entry)(struct sk_buff *skb,
+			   struct rmnet_port *port);
 	void (*frag_entry)(struct rmnet_frag_descriptor *frag_desc,
 			   struct rmnet_port *port);
 
@@ -397,7 +398,7 @@ static int rmnet_perf_config_notify_cb(struct notifier_block *nb,
 
 	switch (event) {
 	case NETDEV_UNREGISTER:
-		pr_info("%s(): rmnet_perf netdevice unregister, name = %s\n",
+		pr_debug("%s(): rmnet_perf netdevice unregister, name = %s\n",
 			__func__, dev->name);
 		if (perf && rmnet_is_real_dev_registered(dev) &&
 		    rmnet_perf_config_hook_registered() &&
